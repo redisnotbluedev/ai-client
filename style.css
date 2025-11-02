@@ -102,3 +102,31 @@
 	margin: auto 0;
 	white-space: pre-wrap;
 }
+
+.thinking {
+	font-size: 1.5rem;
+	font-weight: 600;
+	display: inline-block;
+	background: linear-gradient(
+		90deg,
+		#4a4a4a 0%,
+		#6e6e6e 25%,
+		#e4e4e4 50%,
+		#6e6e6e 75%,
+		#4a4a4a 100%
+	);
+	background-size: 300% 100%;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: gradient-move 3s linear infinite;
+}
+
+@keyframes gradient-move {
+	0% {
+		background-position: 200% 0;
+	}
+	100% {
+		background-position: -200% 0;
+	}
+}

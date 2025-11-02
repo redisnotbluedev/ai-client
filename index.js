@@ -34,7 +34,7 @@ async function sendMessage(text) {
 
 	const assistantMsg = document.createElement("div");
 	assistantMsg.className = "message assistant";
-	assistantMsg.innerHTML = `<div class="message-content">Thinking...</div>`;
+	assistantMsg.innerHTML = `<div class="message-content"><div class="thinking">Thinking...</div></div>`;
 	messages.appendChild(assistantMsg);
 	const contentDiv = assistantMsg.querySelector(".message-content");
 
@@ -55,6 +55,7 @@ async function sendMessage(text) {
 
 	const reader = response.body.getReader();
 	const decoder = new TextDecoder();
+	let firstChunk = true;
 
 	while (true) {
 		const {done, value} = await reader.read();
@@ -63,7 +64,6 @@ async function sendMessage(text) {
 		const chunk = decoder.decode(value);
 		const lines = chunk.split("\n").filter(line => line.trim() !== "");
 
-		let firstChunk = true;
 		for (const line of lines) {
 			if (line.startsWith("data: ")) {
 				const data = line.slice(6);
