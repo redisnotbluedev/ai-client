@@ -7,6 +7,7 @@ const API_KEY = localStorage.getItem("API_KEY");
 
 let messageList = [];
 let currentChatId;
+let isPendingChat = true;
 
 input.addEventListener("input", (e) => {
 	const text = input.textContent.trim();
@@ -24,34 +25,6 @@ input.addEventListener("keydown", (e) => {
 		input.classList.add("empty");
 	}
 });
-
-function initializeApp() {
-	let chats = JSON.parse(localStorage.getItem("chats") || "{}");
-	let lastChatId = localStorage.getItem("currentChatId");
-	
-	// If no chats exist, create first one
-	if (Object.keys(chats).length === 0) {
-		const firstChatId = `chat-${Date.now()}`;
-		chats[firstChatId] = {
-			id: firstChatId,
-			title: "New Chat",
-			created: Date.now(),
-			messages: []
-		};
-		localStorage.setItem("chats", JSON.stringify(chats));
-		lastChatId = firstChatId;
-		localStorage.setItem("currentChatId", lastChatId);
-	}
-	
-	// Load the last active chat (or first available)
-	if (!lastChatId || !chats[lastChatId]) {
-		lastChatId = Object.keys(chats)[0];
-		localStorage.setItem("currentChatId", lastChatId);
-	}
-	
-	switchChat(lastChatId);
-	renderChatList();
-}
 
 function switchChat(chatId) {
 	if (currentChatId) {
@@ -102,6 +75,23 @@ function saveCurrentChat() {
 }
 
 async function sendMessage(text) {
+	if (isPendingChat) {
+		const newId = `chat-${Date.now()}`;
+		const chats = JSON.parse(localStorage.getItem("chats") || "{}");
+		chats[newId] = {
+			id: newId,
+			title: text.slice(0, 50),
+			created: Date.now(),
+			messages: []
+		};
+		localStorage.setItem("chats", JSON.stringify(chats));
+		currentChatId = newId;
+		isPendingChat = false;
+		localStorage.setItem("currentChatId", newId);
+		renderChatList();
+	}
+	
+	messageList.push({role: "user", content: text});
 	messages.innerHTML += `
 		<div class="message user">
 			<div class="message-header">
@@ -110,7 +100,6 @@ async function sendMessage(text) {
 			<div class="message-content">${text}</div>
 		</div>
 	`;
-	messageList.push({role: "user", content: text});
 
 	const assistantMsg = document.createElement("div");
 	assistantMsg.className = "message assistant";
@@ -168,27 +157,14 @@ async function sendMessage(text) {
 }
 
 function createNewChat() {
-	if (currentChatId) {
+	if (currentChatId && !isPendingChat) {
 		saveCurrentChat();
 	}
-
-	const newId = `chat-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
-
-	// Create new chat object
-	const chats = JSON.parse(localStorage.getItem("chats") || "{}");
-	chats[newId] = {
-		id: newId,
-		title: "New Chat", // Auto-name from first message later
-		created: Date.now(),
-		messages: []
-	};
-	localStorage.setItem("chats", JSON.stringify(chats));
 	
-	// Switch to it
-	switchChat(newId);
-	
-	// Update sidebar
-	renderChatList();
+	messageList = [];
+	currentChatId = null;
+	isPendingChat = true;
+	renderMessages();
 }
 
 function renderChatList() {
