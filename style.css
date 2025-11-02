@@ -129,147 +129,152 @@
 }
 
 .sidebar {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    max-width: 260px;
-    padding: 20px 16px;
-    gap: 0;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	max-width: 260px;
+	padding: 20px 16px;
+	gap: 0;
 }
 
 .title {
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--accent-primary);
-    margin-bottom: 20px;
+	font-size: 1.4rem;
+	font-weight: 600;
+	color: var(--accent-primary);
+	margin-bottom: 20px;
 }
 
 .section {
-    color: var(--text-secondary);
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin: 20px 0 8px 0;
-    padding: 0 8px;
+	color: var(--text-secondary);
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	margin: 20px 0 8px 0;
+	padding: 0 8px;
 }
 
 .separator {
-    color: var(--text-tertiary);
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin: 16px 0 8px 0;
-    padding: 0 8px;
+	color: var(--text-tertiary);
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	margin: 16px 0 8px 0;
+	padding: 0 8px;
 }
 
 button.menu {
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.2s;
-    margin-bottom: 8px;
+	padding: 10px 16px;
+	border-radius: 8px;
+	font-weight: 600;
+	transition: all 0.2s;
+	margin-bottom: 8px;
 	text-align: left;
 }
 
 button.menu:hover {
-    background: var(--bg-hover);
+	background: var(--bg-hover);
 }
 
 button.flat {
-    background: none;
-    border: none;
-    color: var(--text-primary);
+	background: none;
+	border: none;
+	color: var(--text-primary);
 }
 
 .chats {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	overflow-y: auto;
 }
 
 .chat-item-container {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    position: relative;
-    border-radius: 8px;
-    transition: background 0.2s;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	position: relative;
+	border-radius: 8px;
+	transition: background 0.2s;
 }
 
 .chat-item-container:hover {
-    background: var(--bg-hover);
+	background: var(--bg-hover);
 }
 
 .chat-item {
-    flex: 1;
-    text-align: left;
-    padding: 10px 12px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: none;
+	flex: 1;
+	text-align: left;
+	padding: 10px 12px;
+	border-radius: 8px;
+	font-size: 0.9rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	transition: none;
 }
 
 .chat-item:hover {
-    background: none;
+	background: none;
 }
 
 .chat-item.active {
-    background-color: var(--bg-hover);
-    font-weight: 500;
+	background-color: var(--bg-hover);
+	font-weight: 500;
 }
 
 .chat-options {
-    background: none;
-    border: none;
-    color: var(--text-tertiary);
-    font-size: 1.2rem;
-    cursor: pointer;
-    padding: 8px;
-    opacity: 0;
-    transition: opacity 0.2s;
-    border-radius: 6px;
-    margin-right: 4px;
+	background: none;
+	border: none;
+	color: var(--text-tertiary);
+	font-size: 1.2rem;
+	cursor: pointer;
+	padding: 8px;
+	opacity: 0;
+	transition: opacity 0.2s;
+	border-radius: 6px;
+	margin-right: 4px;
 }
 
 .chat-options:hover {
-    background: var(--bg-secondary);
+	background: var(--bg-secondary);
 }
 
 .chat-item-container:hover .chat-options {
-    opacity: 1;
+	opacity: 1;
 }
 
 .options-dropdown {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 4px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
-    min-width: 150px;
+	background: var(--bg-secondary);
+	border: 1px solid var(--border-color);
+	border-radius: 8px;
+	padding: 4px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	z-index: 1000;
+	min-width: 150px;
 }
 
 .options-dropdown button {
-    display: block;
-    width: 100%;
-    background: none;
-    border: none;
-    color: var(--text-primary);
-    padding: 8px 12px;
-    text-align: left;
-    cursor: pointer;
-    border-radius: 6px;
-    font-size: 0.9rem;
+	display: block;
+	width: 100%;
+	background: none;
+	border: none;
+	color: var(--text-primary);
+	padding: 8px 12px;
+	text-align: left;
+	cursor: pointer;
+	border-radius: 6px;
+	font-size: 0.9rem;
 }
 
 .options-dropdown button:hover {
-    background: var(--bg-hover);
+	background: var(--bg-hover);
+}
+
+.icon {
+	border-radius: 50%;
+	background: var(--accent-primary);
 }
 
 @keyframes gradient-move {
