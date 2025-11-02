@@ -99,6 +99,7 @@ async function sendMessage(text) {
 			id: newId,
 			title: text.slice(0, 50),
 			created: Date.now(),
+			lastUsed: Date.now(), // Add this
 			messages: []
 		};
 		localStorage.setItem("chats", JSON.stringify(chats));
@@ -171,6 +172,14 @@ async function sendMessage(text) {
 	
 	messageList.push({role: "assistant", content: contentDiv.textContent});
 	saveCurrentChat();
+	
+	const chats = JSON.parse(localStorage.getItem("chats") || "{}");
+	if (chats[currentChatId]) {
+		chats[currentChatId].lastUsed = Date.now();
+		chats[currentChatId].messages = messageList;
+		localStorage.setItem("chats", JSON.stringify(chats));
+		renderChatList();
+	}
 }
 
 function createNewChat() {
@@ -188,7 +197,7 @@ function renderChatList() {
 	chatList.innerHTML = "";
 	const chats = JSON.parse(localStorage.getItem("chats") || "{}");
 	
-	// Categorize chats by time
+	// Categorize chats by time (using lastUsed instead of created)
 	const now = Date.now();
 	const oneDay = 24 * 60 * 60 * 1000;
 	const categories = {
@@ -199,7 +208,9 @@ function renderChatList() {
 	};
 	
 	Object.values(chats).forEach(chat => {
-		const age = now - chat.created;
+		const lastUsed = chat.lastUsed || chat.created; // Fallback to created if lastUsed doesn't exist
+		const age = now - lastUsed;
+		
 		if (age < oneDay) {
 			categories.today.push(chat);
 		} else if (age < oneDay * 2) {
@@ -211,22 +222,28 @@ function renderChatList() {
 		}
 	});
 	
+	// Sort each category by lastUsed (most recent first)
+	Object.keys(categories).forEach(key => {
+		categories[key].sort((a, b) => {
+			const aTime = a.lastUsed || a.created;
+			const bTime = b.lastUsed || b.created;
+			return bTime - aTime; // Descending order (newest first)
+		});
+	});
+	
 	// Render each category
 	if (categories.today.length > 0) {
 		chatList.innerHTML += `<p class="seperator">Today</p>`;
 		categories.today.forEach(chat => renderChatItem(chat));
 	}
-	
 	if (categories.yesterday.length > 0) {
 		chatList.innerHTML += `<p class="seperator">Yesterday</p>`;
 		categories.yesterday.forEach(chat => renderChatItem(chat));
 	}
-	
 	if (categories.last7days.length > 0) {
 		chatList.innerHTML += `<p class="seperator">Last 7 Days</p>`;
 		categories.last7days.forEach(chat => renderChatItem(chat));
 	}
-	
 	if (categories.older.length > 0) {
 		chatList.innerHTML += `<p class="seperator">Older</p>`;
 		categories.older.forEach(chat => renderChatItem(chat));
@@ -234,25 +251,28 @@ function renderChatList() {
 }
 
 function renderChatItem(chat) {
-	const container = document.createElement("div");
-	container.className = "chat-item-container";
-	
-	const button = document.createElement("button");
-	button.className = "chat-item flat";
-	button.textContent = chat.title;
-	button.addEventListener("click", () => switchChat(chat.id));
-	
-	const menu = document.createElement("button");
-	menu.className = "chat-options";
-	menu.innerHTML = "⋮";
-	menu.addEventListener("click", (e) => {
-		e.stopPropagation();
-		showChatOptions(chat.id, e);
-	});
-	
-	container.appendChild(button);
-	container.appendChild(menu);
-	chatList.appendChild(container);
+    const container = document.createElement("div");
+    container.className = "chat-item-container";
+    const button = document.createElement("button");
+    button.className = "chat-item flat";
+    
+    // Add active class if this is the current chat
+    if (chat.id === currentChatId) {
+        button.classList.add("active");
+    }
+    
+    button.textContent = chat.title;
+    button.addEventListener("click", () => switchChat(chat.id));
+    const menu = document.createElement("button");
+    menu.className = "chat-options";
+    menu.innerHTML = "⋮";
+    menu.addEventListener("click", (e) => {
+        e.stopPropagation();
+        showChatOptions(chat.id, e);
+    });
+    container.appendChild(button);
+    container.appendChild(menu);
+    chatList.appendChild(container);
 }
 
 function showChatOptions(chatId, event) {
