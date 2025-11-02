@@ -289,12 +289,6 @@ button.flat {
 	color: var(--accent-primary);
 }
 
-.chat-header {
-	margin: calc(var(--spacing-lg) * -1);
-	margin-bottom: 0;
-	height: 50px;
-}
-
 @keyframes gradient-move {
 	0% {
 		background-position: 200% 0;
