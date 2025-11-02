@@ -11,8 +11,13 @@ input.addEventListener("keydown", (e) => {
 	const text = input.textContent.trim();
 	if ((e.ctrlKey || e.metaKey) && e.key === "Enter" && !(text === "" || text == "\n")) {
 		e.preventDefault();
+		sendMessage(text);
 		input.textContent = "";
 		send.disabled = true;
 		input.classList.add("empty");
 	}
 });
+
+function sendMessage(text) {
+	console.log(text);
+}
