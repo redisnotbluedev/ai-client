@@ -168,15 +168,50 @@ function createNewChat() {
 }
 
 function renderChatList() {
-	chatList.innerHTML = `<p class="separator">Today</p>`;
+	chatList.innerHTML = `<p class="seperator">Today</p>`;
 	const chats = JSON.parse(localStorage.getItem("chats") || "{}");
+	
 	Object.keys(chats).forEach(chatId => {
+		const container = document.createElement("div");
+		container.className = "chat-item-container";
+		
 		const button = document.createElement("button");
 		button.className = "chat-item flat";
 		button.textContent = chats[chatId].title;
 		button.addEventListener("click", () => switchChat(chatId));
-		chatList.appendChild(button);
+		
+		const menu = document.createElement("button");
+		menu.className = "chat-options";
+		menu.innerHTML = "⋮";
+		menu.addEventListener("click", (e) => {
+			e.stopPropagation();
+			showChatOptions(chatId, e);
+		});
+		
+		container.appendChild(button);
+		container.appendChild(menu);
+		chatList.appendChild(container);
 	});
+}
+
+function showChatOptions(chatId, event) {
+	// Create dropdown menu
+	const menu = document.createElement("div");
+	menu.className = "options-dropdown";
+	menu.innerHTML = `
+		<button onclick="renameChat('${chatId}')">Rename</button>
+		<button onclick="deleteChat('${chatId}')">Delete</button>
+	`;
+	
+	menu.style.position = "absolute";
+	menu.style.top = `${event.clientY}px`;
+	menu.style.left = `${event.clientX}px`;
+	
+	document.body.appendChild(menu);
+	
+	setTimeout(() => {
+		document.addEventListener("click", () => menu.remove(), {once: true});
+	}, 0);
 }
 
 initializeApp();
