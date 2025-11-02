@@ -384,7 +384,7 @@ Title: "Photosynthesis explanation"
 
 Respond with ONLY the title, no explanation or punctuation.`;
 	messages.unshift(titlePrompt);
-	const resp = await fetch("https://api.mapleai.de/chat/completions", {
+	const resp = await fetch("https://api.mapleai.de/v1/chat/completions", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
