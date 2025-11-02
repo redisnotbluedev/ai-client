@@ -207,7 +207,7 @@ async function sendMessage(text) {
 		}
 	}
 	
-	messageList.push({role: "assistant", content: contentDiv.textContent});
+	messageList.push({role: "assistant", content: message});
 	saveCurrentChat();
 	
 	const chats = JSON.parse(localStorage.getItem("chats") || "{}");
