@@ -195,7 +195,7 @@ function renderChatList() {
 	chatList.innerHTML = `<p class="seperator">Today</p>`;
 	const chats = JSON.parse(localStorage.getItem("chats") || "{}");
 	Object.keys(chats).forEach(item => {
-		chatList.innerHTML += `<button class="chat-item flat" onclick="switchChat(${item})">[object Object]</button>`;
+		chatList.innerHTML += `<button class="chat-item flat" onclick="switchChat('${item})'">${chats[item].title}</button>`;
 	});
 }
 

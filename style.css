@@ -162,7 +162,10 @@ button.flat {
 	background: none;
 }
 
-.chat-item {/* add something */}
+.chat-item {
+	color: white;
+	text-align: start;
+}
 
 @keyframes gradient-move {
 	0% {
