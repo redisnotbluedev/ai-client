@@ -128,12 +128,13 @@ function saveCurrentChat() {
 }
 
 async function sendMessage(text) {
+	messageList.push({role: "user", content: text});
 	if (isPendingChat) {
 		const newId = `chat-${Date.now()}`;
 		const chats = JSON.parse(localStorage.getItem("chats") || "{}");
 		chats[newId] = {
 			id: newId,
-			title: text.slice(0, 50),
+			title: generateTitle(messageList),
 			created: Date.now(),
 			lastUsed: Date.now(), // Add this
 			messages: []
@@ -145,7 +146,6 @@ async function sendMessage(text) {
 		renderChatList();
 	}
 	
-	messageList.push({role: "user", content: text});
 	messages.innerHTML += `
 		<div class="message user">
 			<div class="message-header">
@@ -170,7 +170,7 @@ async function sendMessage(text) {
 			"Authorization": `Bearer ${API_KEY}`
 		},
 		body: JSON.stringify({
-			model: "gpt-5",
+			model: "claude-4.5-sonnet",
 			messages: messageList,
 			stream: true
 		})
@@ -210,6 +210,7 @@ async function sendMessage(text) {
 	
 	messageList.push({role: "assistant", content: message});
 	saveCurrentChat();
+	renameChat(currentChatId, generateTitle(messageList))
 	
 	const chats = JSON.parse(localStorage.getItem("chats") || "{}");
 	if (chats[currentChatId]) {
@@ -332,7 +333,7 @@ function showChatOptions(chatId, event) {
 	const menu = document.createElement("div");
 	menu.className = "options-dropdown";
 	menu.innerHTML = `
-		<button onclick="renameChat('${chatId}')">Rename</button>
+		<button onclick="renameChat('${chatId}', prompt('New name: '))">Rename</button>
 		<button onclick="deleteChat('${chatId}')">Delete</button>
 	`;
 	
@@ -347,9 +348,9 @@ function showChatOptions(chatId, event) {
 	}, 0);
 }
 
-function renameChat(chatId) {
+function renameChat(chatId, text) {
 	let chats = JSON.parse(localStorage.getItem("chats") || "{}");
-	chats[chatId].title = prompt("New title: ");
+	chats[chatId].title = text;
 	localStorage.setItem("chats", JSON.stringify(chats));
 	renderChatList();
 }
@@ -361,6 +362,41 @@ function deleteChat(chatId) {
 		localStorage.setItem("chats", JSON.stringify(chats));
 		renderChatList();
 	}
+}
+
+async function generateTitle(messages) {
+	const titlePrompt = `Generate a concise, descriptive title for this conversation based on the following messages. The title should:
+- Be 3-8 words maximum
+- Capture the main topic or intent
+- Use sentence case (capitalize first word only, unless proper nouns)
+- Avoid generic phrases like "Help with" or "Question about"
+- Be specific and informative
+
+Examples:
+User: "How do I sort an array in JavaScript?"
+Title: "Sorting arrays in JavaScript"
+
+User: "I'm building a chat app but hitting rate limits"
+Title: "Chat app rate limit solutions"
+
+User: "Can you explain how photosynthesis works?"
+Title: "Photosynthesis explanation"
+
+Respond with ONLY the title, no explanation or punctuation.`;
+	messages.unshift(titlePrompt);
+	const resp = await fetch("https://api.mapleai.de/chat/completions", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			"Authorization": `Bearer ${API_KEY}`
+		},
+		body: JSON.stringify({
+			model: "gpt-5",
+			messages: messages
+		})
+	});
+	const json = await resp.json();
+	return json.choices[0].message.content;
 }
 
 initializeApp();
