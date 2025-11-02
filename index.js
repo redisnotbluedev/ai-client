@@ -34,7 +34,7 @@ async function sendMessage(text) {
 
 	const assistantMsg = document.createElement("div");
 	assistantMsg.className = "message assistant";
-	assistantMsg.innerHTML = `<div class="message-content"></div>`;
+	assistantMsg.innerHTML = `<div class="message-content">Thinking...</div>`;
 	messages.appendChild(assistantMsg);
 	const contentDiv = assistantMsg.querySelector(".message-content");
 
@@ -63,6 +63,7 @@ async function sendMessage(text) {
 		const chunk = decoder.decode(value);
 		const lines = chunk.split("\n").filter(line => line.trim() !== "");
 
+		let firstChunk = true;
 		for (const line of lines) {
 			if (line.startsWith("data: ")) {
 				const data = line.slice(6);
@@ -71,6 +72,10 @@ async function sendMessage(text) {
 				try {
 					const parsed = JSON.parse(data);
 					const content = parsed.choices[0]?.delta?.content || "";
+					if (content && firstChunk) {
+						contentDiv.innerHTML = "";
+						firstChunk = false;
+					}
 					contentDiv.textContent += content;
 					messages.scrollTop = messages.scrollHeight;
 				} catch (e) {}
