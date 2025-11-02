@@ -43,8 +43,7 @@
 	min-height: 50px;
 }
 
-.input:empty:before,
-.input:has(br:only-child):before {
+.input.empty :before {
 	content: "How can I help you today?";
 	color: var(--text-tertiary);
 }
