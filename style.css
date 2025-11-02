@@ -65,6 +65,17 @@ body {
 }
 
 .send-button path{
-	fill: red;
+	fill: var(--text-primary);
 }
 
+.send-button {
+	min-width: 32px;
+	min-height: 32px;
+}
+
+button {
+	border: none;
+	border-radius: 8px;
+	background: var(--accent-primary);
+	cursor: pointer;
+}
