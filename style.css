@@ -170,6 +170,7 @@ button.menu {
     font-weight: 500;
     transition: all 0.2s;
     margin-bottom: 8px;
+	text-align: left;
 }
 
 button.menu:hover {
