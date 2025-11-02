@@ -1,5 +1,6 @@
 const input = document.getElementById("input");
 const send = document.getElementById("send");
+const messages = document.getElementById("messages");
 
 input.addEventListener("input", (e) => {
 	const text = input.textContent.trim();
@@ -19,5 +20,5 @@ input.addEventListener("keydown", (e) => {
 });
 
 function sendMessage(text) {
-	console.log(text);
+	messages.innerHTML += `<div class="message">${text}</div>`
 }
