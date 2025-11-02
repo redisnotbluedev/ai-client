@@ -1,8 +1,18 @@
 const input = document.getElementById("input");
 const send = document.getElementById("send");
-input.addEventListener("input", event => {
+
+input.addEventListener("input", (e) => {
 	const text = input.textContent.trim();
 	const isEmpty = (text === "" || text == "\n");
 	send.disabled = isEmpty;
 	input.classList.toggle("empty", isEmpty)
+});
+input.addEventListener("keydown", (e) => {
+	const text = input.textContent.trim();
+	if ((e.ctrlKey || e.metaKey) && e.key === "Enter" && !(text === "" || text == "\n")) {
+		e.preventDefault();
+		input.textContent = "";
+		send.disabled = true;
+		input.classList.add("empty");
+	}
 });
