@@ -44,6 +44,25 @@
 	box-sizing: border-box;
 }
 
+body {
+	background-color: var(--bg-primary);
+	color: var(--text-primary);
+	font-family: var(--font-sans);
+	line-height: 1.6;
+}
+
+button {
+	border: none;
+	border-radius: 8px;
+	background: var(--accent-primary);
+	cursor: pointer;
+}
+
+button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
 ::-webkit-scrollbar {
 	width: 10px;
 }
