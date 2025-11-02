@@ -2,6 +2,7 @@
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
+	height: 100vh;
 }
 
 .chat {
@@ -12,6 +13,7 @@
 	margin: 0 auto;
 	width: 100%;
 	padding: var(--spacing-lg);
+	height: 100%;
 }
 
 .chat-input {
@@ -63,4 +65,11 @@
 .send-button {
 	min-width: 32px;
 	min-height: 32px;
+}
+
+.messages {
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 }
