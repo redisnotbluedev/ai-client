@@ -275,6 +275,18 @@ button.flat {
 .icon {
 	border-radius: 50%;
 	background: var(--accent-primary);
+	width: 32px;
+	height: 32px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.create-new-chat {
+	color: var(--accent-primary);
+	display: flex;
+	gap: 8px;
+	align-items: center;
 }
 
 @keyframes gradient-move {
