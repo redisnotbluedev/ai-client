@@ -95,8 +95,7 @@ function switchChat(chatId) {
 }
 
 function renderMessages() {
-	const messagesContainer = document.querySelector(".messages");
-	messagesContainer.innerHTML = ""; // Clear existing
+	messages.innerHTML = ""; // Clear existing
 	
 	messageList.forEach(msg => {
 		const messageDiv = document.createElement("div");
@@ -107,10 +106,10 @@ function renderMessages() {
 			</div>` : ""}
 			<div class="message-content">${format(msg.content)}</div>
 		`;
-		messagesContainer.appendChild(messageDiv);
+		messages.appendChild(messageDiv);
 	});
 	
-	messagesContainer.scrollTop = messagesContainer.scrollHeight;
+	messages.scrollTop = messages.scrollHeight;
 }
 
 function saveCurrentChat() {
