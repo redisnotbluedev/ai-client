@@ -98,6 +98,7 @@
 	border-radius: 8px;
 	padding: 4px;
 	gap: 10px;
+	width: min-content;
 }
 
 .message.assistant {
