@@ -9,7 +9,7 @@ input.addEventListener("input", (e) => {
 	input.classList.toggle("empty", isEmpty)
 });
 input.addEventListener("keydown", (e) => {
-	const text = input.textContent.trim();
+	const text = input.innerText.trim();
 	if ((e.ctrlKey || e.metaKey) && e.key === "Enter" && !(text === "" || text == "\n")) {
 		e.preventDefault();
 		sendMessage(text);
