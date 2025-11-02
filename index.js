@@ -1,6 +1,8 @@
 const input = document.getElementById("input");
 const send = document.getElementById("send");
 const messages = document.getElementById("messages");
+const chatList = document.getElementById("chatList");
+
 const API_KEY = localStorage.getItem("API_KEY");
 
 let messageList = [];
@@ -22,6 +24,34 @@ input.addEventListener("keydown", (e) => {
 		input.classList.add("empty");
 	}
 });
+
+function initializeApp() {
+	let chats = JSON.parse(localStorage.getItem("chats") || "{}");
+	let lastChatId = localStorage.getItem("currentChatId");
+	
+	// If no chats exist, create first one
+	if (Object.keys(chats).length === 0) {
+		const firstChatId = `chat-${Date.now()}`;
+		chats[firstChatId] = {
+			id: firstChatId,
+			title: "New Chat",
+			created: Date.now(),
+			messages: []
+		};
+		localStorage.setItem("chats", JSON.stringify(chats));
+		lastChatId = firstChatId;
+		localStorage.setItem("currentChatId", lastChatId);
+	}
+	
+	// Load the last active chat (or first available)
+	if (!lastChatId || !chats[lastChatId]) {
+		lastChatId = Object.keys(chats)[0];
+		localStorage.setItem("currentChatId", lastChatId);
+	}
+	
+	switchChat(lastChatId);
+	renderChatList();
+}
 
 function switchChat(chatId) {
 	if (currentChatId) {
@@ -58,7 +88,15 @@ function renderMessages() {
 }
 
 function saveCurrentChat() {
+	if (!currentChatId) return; // Guard clause
+	
 	const chats = JSON.parse(localStorage.getItem("chats") || "{}");
+	
+	if (!chats[currentChatId]) {
+		console.error(`Chat ${currentChatId} doesn't exist!`);
+		return;
+	}
+	
 	chats[currentChatId].messages = messageList;
 	localStorage.setItem("chats", JSON.stringify(chats));
 }
@@ -150,5 +188,15 @@ function createNewChat() {
 	switchChat(newId);
 	
 	// Update sidebar
-	//renderChatList();
+	renderChatList();
 }
+
+function renderChatList() {
+	chatList.innerHTML = `<p class="seperator">Today</p>`;
+	const chats = JSON.parse(localStorage.getItem("chats") || "{}");
+	Object.keys(chats).forEach(item => {
+		chatList.innerHTML += `<button class="chat-item flat" onclick="switchChat(${item})">[object Object]</button>`;
+	});
+}
+
+initializeApp();

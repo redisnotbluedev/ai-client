@@ -158,6 +158,12 @@ button.menu {
 	padding: 10px;
 }
 
+button.flat {
+	background: none;
+}
+
+.chat-item {/* add something */}
+
 @keyframes gradient-move {
 	0% {
 		background-position: 200% 0;
