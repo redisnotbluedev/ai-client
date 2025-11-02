@@ -262,6 +262,14 @@ function renderChatList() {
 			categories.older.push(chat);
 		}
 	});
+
+	Object.keys(categories).forEach(key => {
+		categories[key].sort((a, b) => {
+			const aTime = a.lastUsed || a.created;
+			const bTime = b.lastUsed || b.created;
+			return bTime - aTime; // Descending order (newest first)
+		});
+	});
 	
 	// Render each category
 	if (categories.today.length > 0) {
