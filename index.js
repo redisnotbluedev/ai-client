@@ -1,7 +1,8 @@
 const input = document.getElementById("input");
 const send = document.getElementById("send");
 const messages = document.getElementById("messages");
-const API_KEY = localStorage.getItem("API_KEY")
+const API_KEY = localStorage.getItem("API_KEY");
+let messageList = [];
 
 input.addEventListener("input", (e) => {
 	const text = input.textContent.trim();
@@ -21,7 +22,6 @@ input.addEventListener("keydown", (e) => {
 });
 
 async function sendMessage(text) {
-	// Add user message
 	messages.innerHTML += `
 		<div class="message user">
 			<div class="message-header">
@@ -30,6 +30,7 @@ async function sendMessage(text) {
 			<div class="message-content">${text}</div>
 		</div>
 	`;
+	messageList.push({role: "user", content: text});
 
 	const assistantMsg = document.createElement("div");
 	assistantMsg.className = "message assistant";
@@ -47,9 +48,7 @@ async function sendMessage(text) {
 		},
 		body: JSON.stringify({
 			model: "gpt-5",
-			messages: [
-				{role: "user", content: text}
-			],
+			messages: messageList,
 			stream: true
 		})
 	});
@@ -78,4 +77,6 @@ async function sendMessage(text) {
 			}
 		}
 	}
+	
+	messageList.push({role: "assistant", content: contentDiv.textContent});
 }
