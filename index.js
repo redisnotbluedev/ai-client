@@ -389,7 +389,7 @@ User: "Can you explain how photosynthesis works?"
 Title: "Photosynthesis explanation"
 
 Respond with ONLY the title, no explanation or punctuation.`;
-	messages.unshift(titlePrompt);
+	messages.unshift({role: "system", content: titlePrompt});
 	const resp = await fetch("https://api.mapleai.de/v1/chat/completions", {
 		method: "POST",
 		headers: {
