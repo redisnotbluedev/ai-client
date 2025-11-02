@@ -17,20 +17,6 @@
 	background: var(--bg-secondary);
 }
 
-.sidebar {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	flex: 1;
-	max-width: 300px;
-	padding: 10px 30px;
-}
-
-.title {
-	font-size: 1.3rem;
-	color: var(--accent-primary);
-}
-
 .chats {
 	display: flex;
 	flex-direction: column;
@@ -142,83 +128,147 @@
 	animation: gradient-move 3s linear infinite;
 }
 
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    max-width: 260px;
+    padding: 20px 16px;
+    gap: 0;
+}
+
+.title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--accent-primary);
+    margin-bottom: 20px;
+}
+
 .section {
-	color: var(--text-secondary);
+    color: var(--text-tertiary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 20px 0 8px 0;
+    padding: 0 8px;
 }
 
 .separator {
-	color: var(--text-tertiary);
-	margin-bottom: 5px;
+    color: var(--text-tertiary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 16px 0 8px 0;
+    padding: 0 8px;
 }
 
 button.menu {
-	padding: 10px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s;
+    margin-bottom: 8px;
+}
+
+button.menu:hover {
+    background: var(--bg-hover);
 }
 
 button.flat {
-	background: none;
+    background: none;
+    border: none;
+    color: var(--text-primary);
 }
 
-.chat-item {
-	color: var(--text-primary);
-	text-align: start;
-	padding: 4px;
+.chats {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow-y: auto;
 }
 
 .chat-item-container {
-	display: flex;
-	align-items: center;
-	gap: 5px;
-	position: relative;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.chat-item-container:hover {
+    background: var(--bg-hover);
 }
 
 .chat-item {
-	flex: 1;
-	text-align: left;
+    flex: 1;
+    text-align: left;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: none;
 }
 
-.chat-options {
-	background: none;
-	border: none;
-	color: var(--text-tertiary);
-	font-size: 1.2rem;
-	cursor: pointer;
-	padding: 5px 10px;
-	opacity: 0;
-	transition: opacity 0.2s;
-}
-
-.chat-item-container:hover .chat-options {
-	opacity: 1;
-}
-
-.options-dropdown {
-	background: var(--bg-secondary);
-	border: 1px solid var(--border-color);
-	border-radius: 8px;
-	padding: 5px 0;
-	box-shadow: var(--shadow-sm);
-	z-index: 1000;
-}
-
-.options-dropdown button {
-	display: block;
-	width: 100%;
-	background: none;
-	border: none;
-	color: var(--text-primary);
-	padding: 10px 20px;
-	text-align: left;
-	cursor: pointer;
-}
-
-.options-dropdown button:hover {
-	background: var(--accent-light);
+.chat-item:hover {
+    background: none;
 }
 
 .chat-item.active {
-	background-color: var(--bg-hover);
-	border-left: 3px solid var(--accent-primary)
+    background-color: var(--bg-hover);
+    font-weight: 500;
+}
+
+.chat-options {
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    border-radius: 6px;
+    margin-right: 4px;
+}
+
+.chat-options:hover {
+    background: var(--bg-secondary);
+}
+
+.chat-item-container:hover .chat-options {
+    opacity: 1;
+}
+
+.options-dropdown {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    min-width: 150px;
+}
+
+.options-dropdown button {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    padding: 8px 12px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.options-dropdown button:hover {
+    background: var(--bg-hover);
 }
 
 @keyframes gradient-move {
