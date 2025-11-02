@@ -74,3 +74,25 @@
 	flex-direction: column;
 	gap: 10px;
 }
+
+.avatar {
+	background: var(--accent-primary);
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.message.user {
+	display: flex;
+	background: var(--bg-tertiary);
+	border-radius: 8px;
+	padding: 4px;
+	gap: 10px;
+}
+
+.message-content {
+	margin: auto 0;
+}

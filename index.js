@@ -20,5 +20,5 @@ input.addEventListener("keydown", (e) => {
 });
 
 function sendMessage(text) {
-	messages.innerHTML += `<div class="message user"><div class="message-header"><div class="avatar">U</div></div><div class="message-border">${text}</div></div>`
+	messages.innerHTML += `<div class="message user"><div class="message-header"><div class="avatar">U</div></div><div class="message-content">${text}</div></div>`
 }
