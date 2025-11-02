@@ -174,7 +174,7 @@ async function sendMessage(text) {
 			"Authorization": `Bearer ${API_KEY}`
 		},
 		body: JSON.stringify({
-			model: "claude-4.5-sonnet",
+			model: "gpt-5-chat",
 			messages: messageList,
 			stream: true
 		})
