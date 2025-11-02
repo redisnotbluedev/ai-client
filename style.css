@@ -94,6 +94,10 @@
 	gap: 10px;
 }
 
+.message.assistant {
+	margin-bottom: 20px;
+}
+
 .message-content {
 	margin: auto 0;
 	white-space: pre-wrap;
