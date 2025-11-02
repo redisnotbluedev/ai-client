@@ -134,7 +134,7 @@ async function sendMessage(text) {
 		const chats = JSON.parse(localStorage.getItem("chats") || "{}");
 		chats[newId] = {
 			id: newId,
-			title: generateTitle(messageList),
+			title: await generateTitle(messageList),
 			created: Date.now(),
 			lastUsed: Date.now(), // Add this
 			messages: []
@@ -210,7 +210,7 @@ async function sendMessage(text) {
 	
 	messageList.push({role: "assistant", content: message});
 	saveCurrentChat();
-	renameChat(currentChatId, generateTitle(messageList))
+	renameChat(currentChatId, await generateTitle(messageList))
 	
 	const chats = JSON.parse(localStorage.getItem("chats") || "{}");
 	if (chats[currentChatId]) {
