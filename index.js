@@ -55,6 +55,7 @@ function switchChat(chatId) {
 		currentChatId = chatId;
 		messageList = chat.messages;
 		renderMessages();
+		renderChatList();
 	}
 }
 
@@ -191,6 +192,7 @@ function createNewChat() {
 	currentChatId = null;
 	isPendingChat = true;
 	renderMessages();
+	renderChatList();
 }
 
 function renderChatList() {
