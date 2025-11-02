@@ -4,7 +4,7 @@ const messages = document.getElementById("messages");
 const API_KEY = localStorage.getItem("API_KEY");
 
 let messageList = [];
-let currentChatId = 0;
+let currentChatId;
 
 input.addEventListener("input", (e) => {
 	const text = input.textContent.trim();
