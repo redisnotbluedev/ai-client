@@ -167,10 +167,13 @@
 button.menu {
 	padding: 10px 16px;
 	border-radius: 8px;
-	font-weight: 600;
+	font-weight: 500;
 	transition: all 0.2s;
 	margin-bottom: 8px;
 	text-align: left;
+	display: flex;
+	gap: 8px;
+	align-items: center;
 }
 
 button.menu:hover {
@@ -275,8 +278,8 @@ button.flat {
 .icon {
 	border-radius: 50%;
 	background: var(--accent-primary);
-	width: 32px;
-	height: 32px;
+	width: 24px;
+	height: 24px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -284,9 +287,6 @@ button.flat {
 
 .create-new-chat {
 	color: var(--accent-primary);
-	display: flex;
-	gap: 8px;
-	align-items: center;
 }
 
 @keyframes gradient-move {
