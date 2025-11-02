@@ -235,6 +235,7 @@ function renameChat(chatId) {
 	let chats = JSON.parse(localStorage.getItem("chats") || "{}");
 	chats[chatId].title = prompt("New title: ");
 	localStorage.setItem("chats", JSON.stringify(chats));
+	renderChatList();
 }
 
 function deleteChat(chatId) {
@@ -242,6 +243,7 @@ function deleteChat(chatId) {
 		let chats = JSON.parse(localStorage.getItem("chats") || "{}");
 		delete chats[chatId];
 		localStorage.setItem("chats", JSON.stringify(chats));
+		renderChatList();
 	}
 }
 
