@@ -143,10 +143,6 @@ async function sendMessage(text) {
 		isPendingChat = false;
 		localStorage.setItem("currentChatId", newId);
 		renderChatList();
-		
-		generateTitle(messageList).then(title => {
-			renameChat(newId, title);
-		});
 	}
 	
 	const userMsg = document.createElement("div");
@@ -355,6 +351,7 @@ function showChatOptions(chatId, event) {
 }
 
 function renameChat(chatId, text) {
+	console.log(chatId, text)
 	let chats = JSON.parse(localStorage.getItem("chats") || "{}");
 	chats[chatId].title = text;
 	localStorage.setItem("chats", JSON.stringify(chats));
@@ -371,7 +368,6 @@ function deleteChat(chatId) {
 }
 
 async function generateTitle(messages) {
-	const tmp = [{role: "system", content: titlePrompt}, ...messages];
 	const titlePrompt = `Generate a concise, descriptive title for this conversation based on the following messages. The title should:
 - Be 3-8 words maximum
 - Capture the main topic or intent
@@ -390,6 +386,7 @@ User: "Can you explain how photosynthesis works?"
 Title: "Photosynthesis explanation"
 
 Respond with ONLY the title, no explanation or punctuation.`;
+	const tmp = [{role: "system", content: titlePrompt}, ...messages];
 	const resp = await fetch("https://api.mapleai.de/v1/chat/completions", {
 		method: "POST",
 		headers: {
@@ -397,7 +394,7 @@ Respond with ONLY the title, no explanation or punctuation.`;
 			"Authorization": `Bearer ${API_KEY}`
 		},
 		body: JSON.stringify({
-			model: "lfm-3b", // dumbest model
+			model: "mixtral-8x7b-instruct", // dumb model
 			messages: tmp
 		})
 	});
