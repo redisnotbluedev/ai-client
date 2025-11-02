@@ -389,7 +389,8 @@ Title: Chat App Rate Limit Solutions
 User: "Can you explain how photosynthesis works?"
 Title: Photosynthesis Explanation
 
-Respond with ONLY the title, no explanation.`;
+You MUST respond with ONLY the title, no explanation.
+IMPORTANT: Never explain or comment. Only output the title. Anything else is wrong.`;
 	const tmp = [{role: "system", content: titlePrompt}, ...messages];
 	const resp = await fetch("https://api.mapleai.de/v1/chat/completions", {
 		method: "POST",
