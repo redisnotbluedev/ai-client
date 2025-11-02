@@ -134,9 +134,9 @@ async function sendMessage(text) {
 		const chats = JSON.parse(localStorage.getItem("chats") || "{}");
 		chats[newId] = {
 			id: newId,
-			title: await generateTitle(messageList),
+			title: "New chat", // Temporary placeholder
 			created: Date.now(),
-			lastUsed: Date.now(), // Add this
+			lastUsed: Date.now(),
 			messages: []
 		};
 		localStorage.setItem("chats", JSON.stringify(chats));
@@ -144,6 +144,10 @@ async function sendMessage(text) {
 		isPendingChat = false;
 		localStorage.setItem("currentChatId", newId);
 		renderChatList();
+		
+		generateTitle(messageList).then(title => {
+			renameChat(newId, title);
+		});
 	}
 	
 	messages.innerHTML += `
@@ -210,7 +214,9 @@ async function sendMessage(text) {
 	
 	messageList.push({role: "assistant", content: message});
 	saveCurrentChat();
-	renameChat(currentChatId, await generateTitle(messageList))
+	generateTitle(messageList).then(title => {
+		renameChat(currentChatId, title);
+	});
 	
 	const chats = JSON.parse(localStorage.getItem("chats") || "{}");
 	if (chats[currentChatId]) {
@@ -391,7 +397,7 @@ Respond with ONLY the title, no explanation or punctuation.`;
 			"Authorization": `Bearer ${API_KEY}`
 		},
 		body: JSON.stringify({
-			model: "gpt-5",
+			model: "lfm-3b", // dumbest model
 			messages: messages
 		})
 	});
