@@ -199,38 +199,31 @@ function renderChatList() {
 	chatList.innerHTML = "";
 	const chats = JSON.parse(localStorage.getItem("chats") || "{}");
 	
-	// Categorize chats by time (using lastUsed instead of created)
-	const now = Date.now();
-	const oneDay = 24 * 60 * 60 * 1000;
+	// Categorize chats by calendar date (using lastUsed instead of created)
+	const now = new Date();
+	const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+	const yesterdayStart = todayStart - (24 * 60 * 60 * 1000);
+	const last7daysStart = todayStart - (7 * 24 * 60 * 60 * 1000);
+
 	const categories = {
 		today: [],
 		yesterday: [],
 		last7days: [],
 		older: []
 	};
-	
+
 	Object.values(chats).forEach(chat => {
-		const lastUsed = chat.lastUsed || chat.created; // Fallback to created if lastUsed doesn't exist
-		const age = now - lastUsed;
+		const lastUsed = chat.lastUsed || chat.created;
 		
-		if (age < oneDay) {
+		if (lastUsed >= todayStart) {
 			categories.today.push(chat);
-		} else if (age < oneDay * 2) {
+		} else if (lastUsed >= yesterdayStart) {
 			categories.yesterday.push(chat);
-		} else if (age < oneDay * 7) {
+		} else if (lastUsed >= last7daysStart) {
 			categories.last7days.push(chat);
 		} else {
 			categories.older.push(chat);
 		}
-	});
-	
-	// Sort each category by lastUsed (most recent first)
-	Object.keys(categories).forEach(key => {
-		categories[key].sort((a, b) => {
-			const aTime = a.lastUsed || a.created;
-			const bTime = b.lastUsed || b.created;
-			return bTime - aTime; // Descending order (newest first)
-		});
 	});
 	
 	// Render each category
