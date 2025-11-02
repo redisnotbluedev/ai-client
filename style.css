@@ -288,6 +288,14 @@ button.flat {
 	color: var(--accent-primary);
 }
 
+.code-block { position: relative; }
+.copy-btn {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	padding: 4px 8px;
+}
+
 @keyframes gradient-move {
 	0% {
 		background-position: 200% 0;

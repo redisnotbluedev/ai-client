@@ -26,6 +26,40 @@ input.addEventListener("keydown", (e) => {
 	}
 });
 
+marked.setOptions({
+	highlight: function(code, lang) {
+		if (Prism.languages[lang]) {
+			return Prism.highlight(code, Prism.languages[lang], lang);
+		}
+		return code;
+	}
+});
+
+function format(text) {
+	const html = marked.parse(text);
+	const withCopyButtons = html.replace(
+		/<pre><code(.*?)>([\s\S]*?)<\/code><\/pre>/g,
+		(match, attrs, code) => {
+			const decodedCode = code
+				.replace(/&lt;/g, '<')
+				.replace(/&gt;/g, '>')
+				.replace(/&amp;/g, '&')
+				.replace(/&quot;/g, '"');
+			return `
+				<div class="code-block">
+					<button class="copy-btn" onclick="
+						navigator.clipboard.writeText(this.dataset.code);
+						this.textContent='Copied!';
+						setTimeout(()=>this.textContent='Copy',2000);
+					" data-code="${decodedCode.replace(/"/g, '&quot;')}">Copy</button>
+					<pre><code${attrs}>${code}</code></pre>
+				</div>
+			`;
+		}
+	);
+	return DOMPurify.sanitize(withCopyButtons, {ADD_ATTR: ['onclick', 'data-code']});
+}
+
 function initializeApp() {
 	let chats = JSON.parse(localStorage.getItem("chats") || "{}");
 	let lastChatId = localStorage.getItem("currentChatId");
@@ -70,7 +104,7 @@ function renderMessages() {
 			${msg.role === "user" ? `<div class="message-header">
 				<div class="avatar">U</div>
 			</div>` : ""}
-			<div class="message-content">${DOMPurify.sanitize(marked.parse(msg.content))}</div>
+			<div class="message-content">${format(msg.content)}</div>
 		`;
 		messagesContainer.appendChild(messageDiv);
 	});
@@ -116,7 +150,7 @@ async function sendMessage(text) {
 			<div class="message-header">
 				<div class="avatar">U</div>
 			</div>
-			<div class="message-content">${DOMPurify.sanitize(marked.parse(text))}</div>
+			<div class="message-content">${format(text)}</div>
 		</div>
 	`;
 
@@ -166,7 +200,7 @@ async function sendMessage(text) {
 						firstChunk = false;
 					}
 					message += content;
-					contentDiv.innerHTML = DOMPurify.sanitize(marked.parse(message));
+					contentDiv.innerHTML = format(message);
 					messages.scrollTop = messages.scrollHeight;
 				} catch (e) {}
 			}
