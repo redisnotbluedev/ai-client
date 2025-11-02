@@ -185,30 +185,74 @@ function createNewChat() {
 }
 
 function renderChatList() {
-	chatList.innerHTML = `<p class="seperator">Today</p>`;
+	chatList.innerHTML = "";
 	const chats = JSON.parse(localStorage.getItem("chats") || "{}");
 	
-	Object.keys(chats).forEach(chatId => {
-		const container = document.createElement("div");
-		container.className = "chat-item-container";
-		
-		const button = document.createElement("button");
-		button.className = "chat-item flat";
-		button.textContent = chats[chatId].title;
-		button.addEventListener("click", () => switchChat(chatId));
-		
-		const menu = document.createElement("button");
-		menu.className = "chat-options";
-		menu.innerHTML = "⋮";
-		menu.addEventListener("click", (e) => {
-			e.stopPropagation();
-			showChatOptions(chatId, e);
-		});
-		
-		container.appendChild(button);
-		container.appendChild(menu);
-		chatList.appendChild(container);
+	// Categorize chats by time
+	const now = Date.now();
+	const oneDay = 24 * 60 * 60 * 1000;
+	const categories = {
+		today: [],
+		yesterday: [],
+		last7days: [],
+		older: []
+	};
+	
+	Object.values(chats).forEach(chat => {
+		const age = now - chat.created;
+		if (age < oneDay) {
+			categories.today.push(chat);
+		} else if (age < oneDay * 2) {
+			categories.yesterday.push(chat);
+		} else if (age < oneDay * 7) {
+			categories.last7days.push(chat);
+		} else {
+			categories.older.push(chat);
+		}
 	});
+	
+	// Render each category
+	if (categories.today.length > 0) {
+		chatList.innerHTML += `<p class="seperator">Today</p>`;
+		categories.today.forEach(chat => renderChatItem(chat));
+	}
+	
+	if (categories.yesterday.length > 0) {
+		chatList.innerHTML += `<p class="seperator">Yesterday</p>`;
+		categories.yesterday.forEach(chat => renderChatItem(chat));
+	}
+	
+	if (categories.last7days.length > 0) {
+		chatList.innerHTML += `<p class="seperator">Last 7 Days</p>`;
+		categories.last7days.forEach(chat => renderChatItem(chat));
+	}
+	
+	if (categories.older.length > 0) {
+		chatList.innerHTML += `<p class="seperator">Older</p>`;
+		categories.older.forEach(chat => renderChatItem(chat));
+	}
+}
+
+function renderChatItem(chat) {
+	const container = document.createElement("div");
+	container.className = "chat-item-container";
+	
+	const button = document.createElement("button");
+	button.className = "chat-item flat";
+	button.textContent = chat.title;
+	button.addEventListener("click", () => switchChat(chat.id));
+	
+	const menu = document.createElement("button");
+	menu.className = "chat-options";
+	menu.innerHTML = "⋮";
+	menu.addEventListener("click", (e) => {
+		e.stopPropagation();
+		showChatOptions(chat.id, e);
+	});
+	
+	container.appendChild(button);
+	container.appendChild(menu);
+	chatList.appendChild(container);
 }
 
 function showChatOptions(chatId, event) {
