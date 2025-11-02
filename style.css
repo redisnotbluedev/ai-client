@@ -17,9 +17,28 @@
 	background: var(--bg-secondary);
 }
 
-.chat-list {
+.section {
+	color: var(--tex)
+}
+
+.sidebar {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 	flex: 1;
 	max-width: 300px;
+	padding: 10px 30px;
+}
+
+.title {
+	font-size: 1.3rem;
+	color: var(--accent-primary);
+}
+
+.chats {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
 }
 
 .chat-input {
