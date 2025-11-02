@@ -298,14 +298,14 @@ function renderChatList() {
 		separator.className = "separator";
 		separator.textContent = "Last 7 days";
 		chatList.appendChild(separator);
-		categories.yesterday.forEach(chat => renderChatItem(chat));
+		categories.last7days.forEach(chat => renderChatItem(chat));
 	}
 	if (categories.older.length > 0) {
 		const separator = document.createElement("p");
 		separator.className = "separator";
 		separator.textContent = "Older";
 		chatList.appendChild(separator);
-		categories.yesterday.forEach(chat => renderChatItem(chat));
+		categories.older.forEach(chat => renderChatItem(chat));
 	}
 }
 
