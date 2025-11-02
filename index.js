@@ -70,7 +70,7 @@ function renderMessages() {
 			${msg.role === "user" ? `<div class="message-header">
 				<div class="avatar">U</div>
 			</div>` : ""}
-			<div class="message-content">${DOMPurify.purify(marked.parse(msg.content))}</div>
+			<div class="message-content">${DOMPurity.sanitize(marked.parse(msg.content))}</div>
 		`;
 		messagesContainer.appendChild(messageDiv);
 	});
@@ -116,7 +116,7 @@ async function sendMessage(text) {
 			<div class="message-header">
 				<div class="avatar">U</div>
 			</div>
-			<div class="message-content">${DOMPurify.purify(marked.parse(text))}</div>
+			<div class="message-content">${DOMPurity.sanitize(marked.parse(text))}</div>
 		</div>
 	`;
 
