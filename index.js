@@ -26,6 +26,23 @@ input.addEventListener("keydown", (e) => {
 	}
 });
 
+function initializeApp() {
+	let chats = JSON.parse(localStorage.getItem("chats") || "{}");
+	let lastChatId = localStorage.getItem("currentChatId");
+	
+	if (lastChatId && chats[lastChatId]) {
+		switchChat(lastChatId);
+		isPendingChat = false;
+	} else {
+		// Start with blank pending chat
+		messageList = [];
+		currentChatId = null;
+		isPendingChat = true;
+	}
+	
+	renderChatList();
+}
+
 function switchChat(chatId) {
 	if (currentChatId) {
 		saveCurrentChat();
