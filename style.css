@@ -146,6 +146,18 @@
 	animation: gradient-move 3s linear infinite;
 }
 
+.section {
+	color: var(--text-secondary);
+}
+
+.separator {
+	color: var(--text-tertiary);
+}
+
+button.menu {
+	padding: 10px;
+}
+
 @keyframes gradient-move {
 	0% {
 		background-position: 200% 0;
