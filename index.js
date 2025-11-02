@@ -166,7 +166,7 @@ async function sendMessage(text) {
 						firstChunk = false;
 					}
 					message += content;
-					contentDiv.innerHTML = DOMPurify.sanitize(marked.parse(text));
+					contentDiv.innerHTML = DOMPurify.sanitize(marked.parse(message));
 					messages.scrollTop = messages.scrollHeight;
 				} catch (e) {}
 			}
