@@ -264,20 +264,32 @@ function renderChatList() {
 	
 	// Render each category
 	if (categories.today.length > 0) {
-		chatList.innerHTML += `<p class="separator">Today</p>`;
+		const separator = document.createElement("p");
+		separator.className = "separator";
+		separator.textContent = "Today";
+		chatList.appendChild(separator);
 		categories.today.forEach(chat => renderChatItem(chat));
 	}
 	if (categories.yesterday.length > 0) {
-		chatList.innerHTML += `<p class="separator">Yesterday</p>`;
+		const separator = document.createElement("p");
+		separator.className = "separator";
+		separator.textContent = "Yesterday";
+		chatList.appendChild(separator);
 		categories.yesterday.forEach(chat => renderChatItem(chat));
 	}
 	if (categories.last7days.length > 0) {
-		chatList.innerHTML += `<p class="separator">Last 7 Days</p>`;
-		categories.last7days.forEach(chat => renderChatItem(chat));
+		const separator = document.createElement("p");
+		separator.className = "separator";
+		separator.textContent = "Last 7 days";
+		chatList.appendChild(separator);
+		categories.yesterday.forEach(chat => renderChatItem(chat));
 	}
 	if (categories.older.length > 0) {
-		chatList.innerHTML += `<p class="separator">Older</p>`;
-		categories.older.forEach(chat => renderChatItem(chat));
+		const separator = document.createElement("p");
+		separator.className = "separator";
+		separator.textContent = "Older";
+		chatList.appendChild(separator);
+		categories.yesterday.forEach(chat => renderChatItem(chat));
 	}
 }
 
