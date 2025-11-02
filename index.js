@@ -128,3 +128,27 @@ async function sendMessage(text) {
 	messageList.push({role: "assistant", content: contentDiv.textContent});
 	saveCurrentChat();
 }
+
+function createNewChat() {
+	if (currentChatId) {
+		saveCurrentChat();
+	}
+
+	const newId = `chat-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+
+	// Create new chat object
+	const chats = JSON.parse(localStorage.getItem("chats") || "{}");
+	chats[newId] = {
+		id: newId,
+		title: "New Chat", // Auto-name from first message later
+		created: Date.now(),
+		messages: []
+	};
+	localStorage.setItem("chats", JSON.stringify(chats));
+	
+	// Switch to it
+	switchChat(newId);
+	
+	// Update sidebar
+	//renderChatList();
+}
