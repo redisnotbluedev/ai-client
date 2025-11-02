@@ -368,24 +368,28 @@ function deleteChat(chatId) {
 }
 
 async function generateTitle(messages) {
-	const titlePrompt = `Generate a concise, descriptive title for this conversation based on the following messages. The title should:
-- Be 3-8 words maximum
-- Capture the main topic or intent
-- Use sentence case (capitalize first word only, unless proper nouns)
-- Avoid generic phrases like "Help with" or "Question about"
-- Be specific and informative
+	const titlePrompt = `You are an assistant that summarizes chat conversations in 3-8 words as a chat title.
+
+- Output ONLY the concise, descriptive title for the conversation, nothing else.
+- Do NOT say "I'm not sure", do NOT ask for more information, do NOT explain your choice.
+- The title should use title case (capitalize all words, unless minor).
+- Avoid generic phrases like "Help with" or "Question about".
+- Be specific and informative if possible.
 
 Examples:
 User: "How do I sort an array in JavaScript?"
-Title: "Sorting arrays in JavaScript"
+Title: Sorting arrays in JavaScript
+
+User: "hi"
+Title: Greeting Exchange
 
 User: "I'm building a chat app but hitting rate limits"
-Title: "Chat app rate limit solutions"
+Title: Chat App Rate Limit Solutions
 
 User: "Can you explain how photosynthesis works?"
-Title: "Photosynthesis explanation"
+Title: Photosynthesis Explanation
 
-Respond with ONLY the title, no explanation or punctuation.`;
+Respond with ONLY the title, no explanation.`;
 	const tmp = [{role: "system", content: titlePrompt}, ...messages];
 	const resp = await fetch("https://api.mapleai.de/v1/chat/completions", {
 		method: "POST",
