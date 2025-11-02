@@ -34,6 +34,7 @@ marked.setOptions({
 		return code;
 	}
 });
+Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
 
 function format(text) {
 	const html = marked.parse(text);
