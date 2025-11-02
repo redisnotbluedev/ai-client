@@ -220,6 +220,11 @@ button.flat {
 	background: var(--accent-light);
 }
 
+.chat-item.active {
+	background-color: var(--bg-hover);
+	border-left: 3px solid var(--accent-primary)
+}
+
 @keyframes gradient-move {
 	0% {
 		background-position: 200% 0;
