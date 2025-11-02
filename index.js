@@ -144,7 +144,7 @@ async function sendMessage(text) {
 	const reader = response.body.getReader();
 	const decoder = new TextDecoder();
 	let firstChunk = true;
-	let text = "";
+	let message = "";
 
 	while (true) {
 		const {done, value} = await reader.read();
@@ -165,7 +165,7 @@ async function sendMessage(text) {
 						contentDiv.innerHTML = "";
 						firstChunk = false;
 					}
-					text += content;
+					message += content;
 					contentDiv.innerHTML = DOMPurify.sanitize(marked.parse(text));
 					messages.scrollTop = messages.scrollHeight;
 				} catch (e) {}
