@@ -152,6 +152,7 @@
 
 .separator {
 	color: var(--text-tertiary);
+	margin-bottom: 5px;
 }
 
 button.menu {
@@ -165,6 +166,7 @@ button.flat {
 .chat-item {
 	color: white;
 	text-align: start;
+	padding: 4px;
 }
 
 @keyframes gradient-move {

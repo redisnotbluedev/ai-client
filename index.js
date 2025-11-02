@@ -192,7 +192,7 @@ function createNewChat() {
 }
 
 function renderChatList() {
-	chatList.innerHTML = `<p class="seperator">Today</p>`;
+	chatList.innerHTML = `<p class="separator">Today</p>`;
 	const chats = JSON.parse(localStorage.getItem("chats") || "{}");
 	Object.keys(chats).forEach(chatId => {
 		const button = document.createElement("button");
