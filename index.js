@@ -235,19 +235,19 @@ function renderChatList() {
 	
 	// Render each category
 	if (categories.today.length > 0) {
-		chatList.innerHTML += `<p class="seperator">Today</p>`;
+		chatList.innerHTML += `<p class="separator">Today</p>`;
 		categories.today.forEach(chat => renderChatItem(chat));
 	}
 	if (categories.yesterday.length > 0) {
-		chatList.innerHTML += `<p class="seperator">Yesterday</p>`;
+		chatList.innerHTML += `<p class="separator">Yesterday</p>`;
 		categories.yesterday.forEach(chat => renderChatItem(chat));
 	}
 	if (categories.last7days.length > 0) {
-		chatList.innerHTML += `<p class="seperator">Last 7 Days</p>`;
+		chatList.innerHTML += `<p class="separator">Last 7 Days</p>`;
 		categories.last7days.forEach(chat => renderChatItem(chat));
 	}
 	if (categories.older.length > 0) {
-		chatList.innerHTML += `<p class="seperator">Older</p>`;
+		chatList.innerHTML += `<p class="separator">Older</p>`;
 		categories.older.forEach(chat => renderChatItem(chat));
 	}
 }
