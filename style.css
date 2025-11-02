@@ -17,10 +17,6 @@
 	background: var(--bg-secondary);
 }
 
-.section {
-	color: var(--tex)
-}
-
 .sidebar {
 	display: flex;
 	flex-direction: column;
