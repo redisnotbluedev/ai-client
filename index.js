@@ -150,14 +150,15 @@ async function sendMessage(text) {
 		});
 	}
 	
-	messages.innerHTML += `
-		<div class="message user">
+	const userMsg = document.createElement("div");
+	userMsg.className = "message user";
+	userMsg.innerHTML = `
 			<div class="message-header">
 				<div class="avatar">U</div>
 			</div>
 			<div class="message-content">${format(text)}</div>
-		</div>
 	`;
+	messages.appendChild(userMsg);
 
 	const assistantMsg = document.createElement("div");
 	assistantMsg.className = "message assistant";
@@ -371,6 +372,7 @@ function deleteChat(chatId) {
 }
 
 async function generateTitle(messages) {
+	const tmp = [{role: "system", content: titlePrompt}, ...messages];
 	const titlePrompt = `Generate a concise, descriptive title for this conversation based on the following messages. The title should:
 - Be 3-8 words maximum
 - Capture the main topic or intent
@@ -389,7 +391,6 @@ User: "Can you explain how photosynthesis works?"
 Title: "Photosynthesis explanation"
 
 Respond with ONLY the title, no explanation or punctuation.`;
-	messages.unshift({role: "system", content: titlePrompt});
 	const resp = await fetch("https://api.mapleai.de/v1/chat/completions", {
 		method: "POST",
 		headers: {
@@ -398,7 +399,7 @@ Respond with ONLY the title, no explanation or punctuation.`;
 		},
 		body: JSON.stringify({
 			model: "lfm-3b", // dumbest model
-			messages: messages
+			messages: tmp
 		})
 	});
 	const json = await resp.json();
