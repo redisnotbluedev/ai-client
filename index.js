@@ -231,4 +231,18 @@ function showChatOptions(chatId, event) {
 	}, 0);
 }
 
+function renameChat(chatId) {
+	let chats = JSON.parse(localStorage.getItem("chats") || "{}");
+	chats[chatId].title = prompt("New title: ");
+	localStorage.setItem("chats", JSON.stringify(chats));
+}
+
+function deleteChat(chatId) {
+	if (confirm("Are you sure you would like to delete this chat?")) {
+		let chats = JSON.parse(localStorage.getItem("chats") || "{}");
+		delete chats[chatId];
+		localStorage.setItem("chats", JSON.stringify(chats));
+	}
+}
+
 initializeApp();
