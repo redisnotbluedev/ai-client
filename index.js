@@ -355,7 +355,8 @@ function showChatOptions(chatId, event) {
 }
 
 function renameChat(chatId, text) {
-	console.log(chatId, text)
+	if (!text) {return}
+	console.log(chatId, text);
 	let chats = JSON.parse(localStorage.getItem("chats") || "{}");
 	chats[chatId].title = text;
 	localStorage.setItem("chats", JSON.stringify(chats));
