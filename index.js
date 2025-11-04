@@ -127,6 +127,7 @@ function saveCurrentChat() {
 }
 
 async function sendMessage(text) {
+	let isNew = false;
 	messageList.push({role: "user", content: text});
 	if (isPendingChat) {
 		const newId = `chat-${Date.now()}`;
@@ -143,6 +144,7 @@ async function sendMessage(text) {
 		isPendingChat = false;
 		localStorage.setItem("currentChatId", newId);
 		renderChatList();
+		isNew = true;
 	}
 	
 	const userMsg = document.createElement("div");
@@ -210,9 +212,11 @@ async function sendMessage(text) {
 	
 	messageList.push({role: "assistant", content: message});
 	saveCurrentChat();
-	generateTitle(messageList).then(title => {
-		renameChat(currentChatId, title);
-	});
+	if (isNew) {
+		generateTitle(messageList).then(title => {
+			renameChat(currentChatId, title);
+		});
+	}
 	
 	const chats = JSON.parse(localStorage.getItem("chats") || "{}");
 	if (chats[currentChatId]) {
@@ -391,7 +395,10 @@ Title: Photosynthesis Explanation
 
 You MUST respond with ONLY the title, no explanation.
 IMPORTANT: Never explain or comment. Only output the title. Anything else is wrong.`;
-	const tmp = [{role: "system", content: titlePrompt}, ...messages];
+	const tmp = [{role: "system", content: titlePrompt}];
+	messages.forEach(msg => {
+		tmp.push({role: "user", content: msg.content});
+	})
 	const resp = await fetch("https://api.mapleai.de/v1/chat/completions", {
 		method: "POST",
 		headers: {
