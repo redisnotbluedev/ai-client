@@ -2,8 +2,8 @@ const input = document.getElementById("input");
 const send = document.getElementById("send");
 const messages = document.getElementById("messages");
 const chatList = document.getElementById("chatList");
-const upload = document.getElementById('upload-btn');
-const fileInput = document.getElementById('file-input');
+const upload = document.getElementById('uploadButton');
+const fileInput = document.getElementById('fileInput');
 
 const API_KEY = localStorage.getItem("API_KEY");
 
