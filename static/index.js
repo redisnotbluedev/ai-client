@@ -2,6 +2,8 @@ const input = document.getElementById("input");
 const send = document.getElementById("send");
 const messages = document.getElementById("messages");
 const chatList = document.getElementById("chatList");
+const upload = document.getElementById('upload-btn');
+const fileInput = document.getElementById('file-input');
 
 const API_KEY = localStorage.getItem("API_KEY");
 
@@ -414,5 +416,32 @@ IMPORTANT: Never explain or comment. Only output the title. Anything else is wro
 	const json = await resp.json();
 	return json.choices[0].message.content;
 }
+
+upload.addEventListener("click", () => fileInput.click());
+
+fileInput.addEventListener("change", async () => {
+  const file = fileInput.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const response = await fetch("/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) throw new Error("Upload failed");
+    const data = await response.json();
+    console.log("File uploaded:", data);
+    alert("File uploaded successfully!");
+  } catch (err) {
+    console.error(err);
+    alert('Error uploading file');
+  } finally {
+    fileInput.value = "";
+  }
+});
 
 initializeApp();
