@@ -20,7 +20,7 @@ def upload_file():
         filename = secure_filename(file.filename)
         path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
         file.save(path)
-        return f"""{{"path": "{path}"}}""", 201
+        return {"path": path}, 201
     
     return "Invalid request", 400
 
