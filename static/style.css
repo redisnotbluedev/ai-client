@@ -319,6 +319,10 @@ button.flat {
 	position: relative;
 }
 
+.attachment:hover .close-button {
+	display: block;
+}
+
 .close-button {
 	position: absolute;
 	top: 0;
