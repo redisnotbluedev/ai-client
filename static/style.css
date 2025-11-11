@@ -302,6 +302,10 @@ button.flat {
 	min-width: 32px;
 }
 
+.attachments {
+	margin-top: 15px;
+}
+
 @keyframes gradient-move {
 	0% {
 		background-position: 200% 0;

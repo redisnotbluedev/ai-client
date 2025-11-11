@@ -435,10 +435,10 @@ fileInput.addEventListener("change", async () => {
 		if (!response.ok) throw new Error("Upload failed");
 		const data = await response.json();
 		console.log("File uploaded:", data);
-		alert("File uploaded successfully!");
+		var elem = document.createElement("div");
+		
 	} catch (err) {
 		console.error(err);
-		alert('Error uploading file');
 	} finally {
 		fileInput.value = "";
 	}
