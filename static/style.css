@@ -332,6 +332,11 @@ button.flat {
 	display: none;
 }
 
+img {
+	max-width: 100%;
+	height: auto;
+}
+
 @keyframes gradient-move {
 	0% {
 		background-position: 200% 0;
