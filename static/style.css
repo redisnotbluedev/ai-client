@@ -30,6 +30,7 @@
 	padding: var(--spacing-md);
 	transition: all 0.2s ease;
 	margin: 0 50px;
+	overflow: hidden;
 }
 
 .chat-input:hover {
@@ -303,7 +304,32 @@ button.flat {
 }
 
 .attachments {
+	background: var(--bg-secondary);
+	padding: 10px;
+	margin: calc(var(--spacing-md) * -1);
 	margin-top: 15px;
+	border-top: 1px solid var(--border-color);
+}
+
+.attachment {
+	width: 100px;
+	height: 100px;
+	background: var(--bg-tertiary);
+	border-radius: var(--radius-md);
+	position: relative;
+}
+
+.close-button {
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-radius: 50%;
+	background: var(--bg-tertiary);
+	width: 16px;
+	height: 16px;
+	border: var(--border-color) 1px solid;
+	transform: translate(-50%, -50%);
+	display: none;
 }
 
 @keyframes gradient-move {
