@@ -341,6 +341,13 @@ img {
 	height: auto;
 }
 
+.thumbnail {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
 @keyframes gradient-move {
 	0% {
 		background-position: 200% 0;
