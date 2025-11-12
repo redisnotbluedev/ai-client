@@ -135,7 +135,7 @@ async function sendMessage(text) {
 	let messageDict = {role: "user", content: [
 		{type: "text", text: text}
 	]};
-	attachments.forEach(item => {
+	attachmentsList.forEach(item => {
 		if (item.type.startsWith("image/")) {
 			messageDict.content.push({
 				type: "image_url",
