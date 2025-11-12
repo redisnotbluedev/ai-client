@@ -125,7 +125,7 @@ function renderMessages() {
 			</div>` : ""}
 			<div class="message-body">
 				${attachmentsHTML}
-				${msg.content ? `<div class="message-content">${format(msg.content)}</div>` : ""}
+				${msg.content ? `<div class="message-content">${format(Array.isArray(msg.content) ? msg.content.filter(item => item.type === "text").map(item => item.text).join("") : msg.content)}</div>` : ""}
 			</div>
 		`;
 		messages.appendChild(messageDiv);
