@@ -107,14 +107,11 @@ function renderMessages() {
 
 		// Build attachments HTML if they exist
 		let attachmentsHTML = "";
-		if (msg.attachments && msg.attachments.length > 0) {
+		const imageAttachments = msg.content?.filter(item => item.type === "image_url") || [];
+		if (imageAttachments.length > 0) {
 			attachmentsHTML = `<div class="attachments">`;
-			msg.attachments.forEach(att => {
-				if (att.type.startsWith("image/")) {
-					attachmentsHTML += `<img src="${att.url}" alt="${att.filename || 'Attachment'}" class="attachment-image">`;
-				} else {
-					attachmentsHTML += `<div class="attachment-file">${att.filename || 'File'}</div>`;
-				}
+			imageAttachments.forEach(att => {
+				attachmentsHTML += `<img src="${att.image_url.url}" alt="Image Attachment" class="attachment-image">`;
 			});
 			attachmentsHTML += `</div>`;
 		}
