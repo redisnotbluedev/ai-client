@@ -29,6 +29,13 @@ input.addEventListener("keydown", (e) => {
 		input.classList.add("empty");
 	}
 });
+send.addEventListener("click", e => {
+	const text = input.innerText.trim();
+	sendMessage(text);
+	input.textContent = "";
+	send.disabled = true;
+	input.classList.add("empty");
+})
 
 marked.setOptions({
 	highlight: function(code, lang) {
