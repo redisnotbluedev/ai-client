@@ -104,11 +104,29 @@ function renderMessages() {
 	messageList.forEach(msg => {
 		const messageDiv = document.createElement("div");
 		messageDiv.className = `message ${msg.role}`;
+
+		// Build attachments HTML if they exist
+		let attachmentsHTML = "";
+		if (msg.attachments && msg.attachments.length > 0) {
+			attachmentsHTML = `<div class="attachments">`;
+			msg.attachments.forEach(att => {
+				if (att.type.startsWith("image/")) {
+					attachmentsHTML += `<img src="${att.url}" alt="${att.filename || 'Attachment'}" class="attachment-image">`;
+				} else {
+					attachmentsHTML += `<div class="attachment-file">${att.filename || 'File'}</div>`;
+				}
+			});
+			attachmentsHTML += `</div>`;
+		}
+
 		messageDiv.innerHTML = `
 			${msg.role === "user" ? `<div class="message-header">
 				<div class="avatar">U</div>
 			</div>` : ""}
-			<div class="message-content">${format(msg.content)}</div>
+			<div class="message-body">
+				${attachmentsHTML}
+				${msg.content ? `<div class="message-content">${format(msg.content)}</div>` : ""}
+			</div>
 		`;
 		messages.appendChild(messageDiv);
 	});
