@@ -243,7 +243,7 @@ async function sendMessage(text) {
 		}
 	}
 	
-	messageList.push({role: "assistant", content: message});
+	messageList.push({role: "assistant", content: [{type: "text", "text": message}]});
 	saveCurrentChat();
 	if (isNew) {
 		generateTitle(messageList).then(title => {
