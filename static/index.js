@@ -437,29 +437,31 @@ function deleteChat(chatId) {
 }
 
 async function generateTitle(messages) {
-	const titlePrompt = `You are an assistant that summarizes chat conversations in 3-8 words as a chat title.
+	const titlePrompt = `You are an assistant that summarizes an entire chat conversation into a short, descriptive title.
 
-- Output ONLY the concise, descriptive title for the conversation, nothing else.
-- Do NOT say "I'm not sure", do NOT ask for more information, do NOT explain your choice.
-- The title should use title case (capitalize all words, unless minor).
-- Avoid generic phrases like "Help with" or "Question about".
-- Be specific and informative if possible.
+Requirements:
+- Write ONE title only.
+- The title must be 3–8 words.
+- Use Title Case (capitalize major words).
+- Be specific and informative.
+- Do NOT include "Help with" or "Question about".
+- Output ONLY the title text—no punctuation before or after, no quotes, no explanations, no extra lines.
+
+Critical Rule:
+If anything other than the title text appears in your reply, that output is invalid. Never apologize, never explain, never add notes.
 
 Examples:
 User: "How do I sort an array in JavaScript?"
-Title: Sorting arrays in JavaScript
+→ Sorting Arrays in JavaScript
 
 User: "hi"
-Title: Greeting Exchange
+→ Greeting Exchange
 
 User: "I'm building a chat app but hitting rate limits"
-Title: Chat App Rate Limit Solutions
+→ Chat App Rate Limit Solutions
 
 User: "Can you explain how photosynthesis works?"
-Title: Photosynthesis Explanation
-
-You MUST respond with ONLY the title, no explanation.
-IMPORTANT: Never explain or comment. Only output the title. Anything else is wrong.`;
+→ Photosynthesis Explanation`;
 	const tmp = [{role: "system", content: titlePrompt}];
 	messages.forEach(msg => {
 		const textContent = msg.content
