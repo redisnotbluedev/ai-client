@@ -429,7 +429,6 @@ fileInput.addEventListener("change", async () => {
 	formData.append("file", file);
 
 	try {
-		
 		const response = await fetch("/upload", {
 			method: "POST",
 			body: formData,
@@ -444,6 +443,7 @@ fileInput.addEventListener("change", async () => {
 
 		var elem = document.createElement("div");
 		elem.className = "attachment";
+		attachments.style.display = "block";
 		attachments.appendChild(elem);
 	
 		var button = document.createElement("button");
