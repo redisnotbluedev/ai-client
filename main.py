@@ -1,4 +1,4 @@
-import os
+import os, base64, mimetypes
 from flask import Flask, request, send_from_directory, render_template
 from werkzeug.utils import secure_filename
 
@@ -18,11 +18,11 @@ def upload_file():
 	
 	if file and allowed_file(file.filename):
 		filename = secure_filename(file.filename)
-		path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-		file.save(path)
-		# Just MITM it for now
-		return {"path": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"}, 201
-		return {"path": f"/uploads/{filename}"}, 201
+		
+		file_content = file.read()
+		mime_type, _ = mimetypes.guess_type(filename)
+		encoded_content = base64.b64encode(file_content).decode("utf-8")
+		return {"path": f"data:{mime_type};base64,{encoded_content}"}, 201
 	
 	return "Invalid request", 400
 
