@@ -462,7 +462,11 @@ You MUST respond with ONLY the title, no explanation.
 IMPORTANT: Never explain or comment. Only output the title. Anything else is wrong.`;
 	const tmp = [{role: "system", content: titlePrompt}];
 	messages.forEach(msg => {
-		tmp.push({role: "user", content: msg.content});
+		const textContent = msg.content
+			.filter(item => item.type === "text")
+			.map(item => item.text)
+			.join("");
+		tmp.push({role: "user", content: textContent});
 	})
 	const resp = await fetch("https://api.mapleai.de/v1/chat/completions", {
 		method: "POST",
