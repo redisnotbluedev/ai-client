@@ -20,6 +20,8 @@ def upload_file():
 		filename = secure_filename(file.filename)
 		path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
 		file.save(path)
+		# Just MITM it for now
+		return {"path": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"}, 201
 		return {"path": f"/uploads/{filename}"}, 201
 	
 	return "Invalid request", 400

@@ -132,13 +132,27 @@ function saveCurrentChat() {
 
 async function sendMessage(text) {
 	let isNew = false;
-	messageList.push({role: "user", content: text});
+	let messageDict = {role: "user", content: [
+		{type: "text", text: text}
+	]};
+	attachments.forEach(item => {
+		if (item.type.startsWith("image/")) {
+			messageDict.content.push({
+				type: "image_url",
+				image_url: {url: item.path}
+			});
+		} else {
+			// attachment not supported
+		}
+	});
+	messageList.push(messageDict);
+
 	if (isPendingChat) {
 		const newId = `chat-${Date.now()}`;
 		const chats = JSON.parse(localStorage.getItem("chats") || "{}");
 		chats[newId] = {
 			id: newId,
-			title: "New chat", // Temporary placeholder
+			title: "Untitled chat", // Temporary placeholder
 			created: Date.now(),
 			lastUsed: Date.now(),
 			messages: []
@@ -451,7 +465,7 @@ fileInput.addEventListener("change", async () => {
 		var button = document.createElement("button");
 		button.className = "close-button";
 		button.innerHTML = `<img src="/static/icons/close.svg">`;
-		button.addEventListener("click", (event) => {
+		button.addEventListener("click", event => {
 			elem.remove();
 			const idx = attachmentsList.indexOf(data);
 			if (idx !== -1) {
@@ -469,6 +483,7 @@ fileInput.addEventListener("change", async () => {
 		img.src = link;
 		elem.appendChild(img);
 		
+		data.type = mime;
 		attachmentsList.push(data);
 	} catch (err) {
 		console.error(err);
