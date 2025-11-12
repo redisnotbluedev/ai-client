@@ -197,11 +197,27 @@ async function sendMessage(text) {
 	
 	const userMsg = document.createElement("div");
 	userMsg.className = "message user";
+
+	// Build attachments HTML if they exist
+	let attachmentsHTML = "";
+	if (attachmentsList.length > 0) {
+		attachmentsHTML = `<div class="attachments">`;
+		attachmentsList.forEach(att => {
+			if (att.type.startsWith("image/")) {
+				attachmentsHTML += `<img src="${att.path}" alt="Image Attachment" class="attachment-image">`;
+			}
+		});
+		attachmentsHTML += `</div>`;
+	}
+
 	userMsg.innerHTML = `
 			<div class="message-header">
 				<div class="avatar">U</div>
 			</div>
-			<div class="message-content">${format(text)}</div>
+			<div class="message-content">
+				${attachmentsHTML}
+				${format(text)}
+			</div>
 	`;
 	messages.appendChild(userMsg);
 
