@@ -10,6 +10,7 @@ const API_KEY = localStorage.getItem("API_KEY");
 let messageList = [];
 let currentChatId;
 let isPendingChat = true;
+let attachments = [];
 
 input.addEventListener("input", (e) => {
 	const text = input.textContent.trim();
@@ -428,15 +429,39 @@ fileInput.addEventListener("change", async () => {
 
 	try {
 		const response = await fetch("/upload", {
-		method: "POST",
-		body: formData,
+			method: "POST",
+			body: formData,
 		});
 
 		if (!response.ok) throw new Error("Upload failed");
 		const data = await response.json();
 		console.log("File uploaded:", data);
+
+		const link = data.path;
+		const mime = file.type;
+
 		var elem = document.createElement("div");
+		elem.className = "attachment";
+	
+		var button = document.createElement("button");
+		button.className = "close-button";
+		button.innerHTML = `<img src="/static/icons/close.svg">`;
+		button.addEventListener("click", (event) => {
+			elem.remove();
+			const idx = attachments.indexOf(data);
+			if (idx !== -1) {
+				attachments.splice(idx, 1);
+			}
+		});
+		elem.appendChild(button);
 		
+		if (mime.startsWith("image")) {
+			var img = document.createElement("img");
+			img.className = "thumbnail";
+			img.src = link;
+			elem.appendChild(img);
+		}
+		attachments.push(data);
 	} catch (err) {
 		console.error(err);
 	} finally {
