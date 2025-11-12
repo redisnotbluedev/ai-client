@@ -2,15 +2,16 @@ const input = document.getElementById("input");
 const send = document.getElementById("send");
 const messages = document.getElementById("messages");
 const chatList = document.getElementById("chatList");
-const upload = document.getElementById('uploadButton');
-const fileInput = document.getElementById('fileInput');
+const upload = document.getElementById("uploadButton");
+const fileInput = document.getElementById("fileInput");
+const attachments = document.getElementById("attachments")
 
 const API_KEY = localStorage.getItem("API_KEY");
 
 let messageList = [];
 let currentChatId;
 let isPendingChat = true;
-let attachments = [];
+let attachmentsList = [];
 
 input.addEventListener("input", (e) => {
 	const text = input.textContent.trim();
@@ -428,6 +429,7 @@ fileInput.addEventListener("change", async () => {
 	formData.append("file", file);
 
 	try {
+		
 		const response = await fetch("/upload", {
 			method: "POST",
 			body: formData,
@@ -442,15 +444,16 @@ fileInput.addEventListener("change", async () => {
 
 		var elem = document.createElement("div");
 		elem.className = "attachment";
+		attachments.appendChild(elem);
 	
 		var button = document.createElement("button");
 		button.className = "close-button";
 		button.innerHTML = `<img src="/static/icons/close.svg">`;
 		button.addEventListener("click", (event) => {
 			elem.remove();
-			const idx = attachments.indexOf(data);
+			const idx = attachmentsList.indexOf(data);
 			if (idx !== -1) {
-				attachments.splice(idx, 1);
+				attachmentsList.splice(idx, 1);
 			}
 		});
 		elem.appendChild(button);
@@ -461,7 +464,7 @@ fileInput.addEventListener("change", async () => {
 			img.src = link;
 			elem.appendChild(img);
 		}
-		attachments.push(data);
+		attachmentsList.push(data);
 	} catch (err) {
 		console.error(err);
 	} finally {
