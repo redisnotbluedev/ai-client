@@ -454,6 +454,9 @@ fileInput.addEventListener("change", async () => {
 			const idx = attachmentsList.indexOf(data);
 			if (idx !== -1) {
 				attachmentsList.splice(idx, 1);
+				if (attachmentsList.isEmpty()) {
+					attachments.style.display = "none";
+				}
 			}
 		});
 		elem.appendChild(button);
