@@ -441,6 +441,8 @@ fileInput.addEventListener("change", async () => {
 		const link = data.path;
 		const mime = file.type;
 
+		if (!mime.startsWith("image/")) throw new Error(`File of type ${mime} is not supported.`)
+
 		var elem = document.createElement("div");
 		elem.className = "attachment";
 		attachments.style.display = "block";
@@ -461,12 +463,12 @@ fileInput.addEventListener("change", async () => {
 		});
 		elem.appendChild(button);
 		
-		if (mime.startsWith("image")) {
-			var img = document.createElement("img");
-			img.className = "thumbnail";
-			img.src = link;
-			elem.appendChild(img);
-		}
+		// Use conditionally after you add more upload types
+		var img = document.createElement("img");
+		img.className = "thumbnail";
+		img.src = link;
+		elem.appendChild(img);
+		
 		attachmentsList.push(data);
 	} catch (err) {
 		console.error(err);
