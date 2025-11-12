@@ -317,7 +317,6 @@ button.flat {
 	background: var(--bg-tertiary);
 	border-radius: var(--radius-md);
 	position: relative;
-	overflow: hidden;
 }
 
 .attachment:hover .close-button {
