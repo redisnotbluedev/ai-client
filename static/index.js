@@ -27,6 +27,8 @@ input.addEventListener("keydown", (e) => {
 		input.textContent = "";
 		send.disabled = true;
 		input.classList.add("empty");
+		attachments.replaceChildren();
+		attachments.style.display = "none";
 	}
 });
 send.addEventListener("click", e => {
@@ -35,6 +37,8 @@ send.addEventListener("click", e => {
 	input.textContent = "";
 	send.disabled = true;
 	input.classList.add("empty");
+	attachments.replaceChildren();
+	attachments.style.display = "none";
 })
 
 marked.setOptions({
@@ -167,6 +171,7 @@ async function sendMessage(text) {
 			// attachment not supported
 		}
 	});
+	attachmentsList = [];
 	messageList.push(messageDict);
 
 	if (isPendingChat) {
