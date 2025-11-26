@@ -1,0 +1,24 @@
+{
+	"start": {
+		"title": "In a Tunnel",
+		"text": "you in a tunnel bro",
+		"choices": [
+			{"text": "Go left", "next": "left"},
+			{"text": "Go right", "next": "right"}
+		]
+	},
+	"left": {
+		"title": "You lose",
+		"text": "THE END - you lose!",
+		"choices": [
+			{"text": "Restart", "next": "start"}
+		]
+	},
+	"right": {
+		"title": "You win!!!",
+		"text": "THE END - cheese is good tasting!",
+		"choices": [
+			{"text": "Restart", "next": "start"}
+		]
+	}
+}
